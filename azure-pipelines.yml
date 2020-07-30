@@ -1,7 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
 - master
@@ -10,10 +10,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  
+- task: AzureVmssDeployment@0
+  inputs:
+    azureSubscription: 'ca-jagord-demo-test(f9b5da45-54cc-42d3-a58b-87adf6ad27ad)'
+    action: 'Update image'
+    vmssName: 'vmclock'
+    vmssOsType: 'Linux'
+    imageUrl: '/subscriptions/f9b5da45-54cc-42d3-a58b-87adf6ad27ad/resourceGroups/vmclock/providers/Microsoft.Compute/images/vmclockimg'
+    customScriptsDirectory: '/root'
+    customScript: 'bash install.sh'
+    customScriptsStorageAccount: 'vmdeployclock'
