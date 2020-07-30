@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "akssga-6a9f"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "akssga-6a9f"
+    spec:
+      containers:
+        - name: "akssga-6a9f"
+          image: "sgacreg.azurecr.io/akssga"
+          ports:
+          - containerPort: 8080
